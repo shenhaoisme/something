@@ -1,0 +1,100 @@
+DH：不想认真去了解加密原理：基本原理如下：
+假设有两个用户， A & B，每个人都有自己的私钥和公钥，公钥是双方都可以看到和使用的。加密算数和解密算法也是公共的。用公钥和私钥进行一系列的运算
+最后双方会生成一个同样的值。。
+
+RSA：公钥加密算法
+
+特点：-非对称-
+
+详细步骤：
+
+第一步，随机选择两个不相等的质数p和q
+p 61  q 53
+第二步，计算p和q的乘积n。
+　n = 61×53 = 3233
+
+n的长度就是密钥长度。3233写成二进制是110010100001，一共有12位，所以这个密钥就是12位。实际应用中，RSA密钥一般是1024位，重要场合则为2048位。
+
+第三步，计算n的欧拉函数φ(n)。
+
+　φ(n) = (p-1)(q-1)
+==3120
+
+第四步，随机选择一个整数e，条件是1< e < φ(n)，且e与φ(n) 互质。
+爱丽丝就在1到3120之间，随机选择了17。（实际应用中，常常选择65537。）
+
+第五步，计算e对于φ(n)的模反元素d。(取余)
+：反正得到一个d，
+
+第六步，将n和e封装成公钥，n和d封装成私钥。
+
+怎么破解这个加密：
+结论：如果n可以被因数分解，d就可以算出，也就意味着私钥被破解。
+
+
+
+x509 公钥
+CA 签名certificate authorty 数字证书认证中心
+它是一个中间证明人，证明双方都是真实可信的
+
+CSR 证书签名请求 certificate signing request
+crt是证书的后缀
+
+PKCS7 是签名的类型
+
+
+零零散散：
+证书就相当于双方的协商好的暗号；
+
+openssl.exe genrsa -out private\server.key 1024 
+
+openssl.exe req -new -key private\server.key -out newcerts\server.csr -config openssl.cnf
+
+openssl.exe ca -in newcerts\server.csr -cert private\ca.crt -keyfile private\ca.key
+
+-config openssl.cnf -policy policy_anything -out certs\server.crt
+
+openssl.exe x509 -in certs\server.crt -noout -text
+
+
+v1：先产生RSA，输出一个1024bit的私钥server.key ，
+REQ，会根据私钥，输出一个server.csr和一个配置文件 openssl.cnf
+根据 server.csr，输出证书ca.crt，并且保存ca.key私钥到一个文件中，penssl.cnf，policy_anything ，server.crt
+x509根据server.crt，不知道要干嘛
+
+v2：需要先生成一对钥匙对，用其中的私钥对CSR进行签名，并安全的保存私钥。CSR请求包含发起者的身份信息，公钥信息，
+以及所请求的证书的专有名称；
+然后CA对这个专有名称发布证书，并绑定一个公钥，组织机构可以把受信的根证书分发给所有的成员，这样就可以使PKI系统了
+
+决定性扩展：扩展指定了证书的用途，需要看下程序有没有扩展相关的内容：：....
+Basic Constraints， { id-ce 19 }[5] 用于指定一份证书是不是一个CA证书。
+Key Usage, { id-ce 15 },[6]指定了这份证书包含的公钥可以执行的密码操作。作为一个例子，它可以指定只能用于签名，而不能用来进行加密操作。
+Extended Key Usage, { id-ce 37 },[7]典型用法是用于叶子证书中的公钥的使用目的。它包括一系列的OID，每一个都指定一种用途。比如{ id-pkix 3 1 } 表示用于服务器端的TLS/SSL连接，而{ id-pkix 3 4 }用于email的安全操作
+
+
+证书链：也就是RFC 5280里的证书路径
+
+
+---
+BN_CTX是一种保存库函数使用的BIGNUM临时变量的结构。 由于与重复子例程调用一起使用时，创建BIGNUM的动态内存分配相当昂贵，因此使用BN_CTX结构。
+
+BN_CTX_new（）分配并初始化BN_CTX结构。 BN_CTX_secure_new（）分配并初始化BN_CTX结构，但使用安全堆（请参阅CRYPTO_secure_malloc（3））来保存BIGNUM。
+
+BN_CTX_free（）释放BN_CTX的组件和结构本身。 由于BN_CTX_start（）是从BN_CTX获取BIGNUM所必需的，因此在大多数情况下必须先调用BN_CTX_end（）才能通过BN_CTX_free（）释放BN_CTX。 如果c为NULL，则不执行任何操作。
+
+给定的BN_CTX只能由单个执行线程使用。 不执行锁定，内部池分配器将无法正确处理多个执行线程。
+
+
+
+
+---
+get_ca_ra
+从参数struct http_reply转化为i_PKCS7_bio
+
+从i_PKCS7_bio中可以找到cert
+
+
+
+
+
+
