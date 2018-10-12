@@ -1,0 +1,6 @@
+ale code有相似的东西
+堆栈是一种先进后出的数据结构。openssl大量采用堆栈来存放数据。它实现了一个通用的堆栈，可以方便的存储任意数据。它实现了许多基本的堆栈操作，
+主要有：堆栈拷贝(sk_dup)、构建新堆栈（sk_new_null，sk_new）、插入数据（sk_insert）、删除数据（sk_delete）、查找数据（sk_find，sk_find_ex）、
+入栈（sk_push）、出栈（sk_pop）、获取堆栈元素个数（sk_num）、获取堆栈值（sk_value）、设置堆栈值（sk_set）和堆栈排序（sk_sort）。
+
+
