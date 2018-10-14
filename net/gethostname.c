@@ -50,14 +50,16 @@ const char * inet_ntop(int family, const void *addrptr, char *strptr, size_t len
 #include	<netdb.h>
 #include	<time.h>
 #include	<strings.h> 
+
+#define   HOSTLEN  256
 int main(int argc, char *argv[])
 {
 	char *ptr, **pptr;
 	struct hostent *hptr;
 	char str[32] = {0};
 	
-	ptr = argv[1];
-	
+	//ptr = argv[1];
+	gethostname(ptr, HOSTLEN);   
 	if((hptr = gethostbyname(ptr)) == NULL)
 	{
 		printf("gethostbyname error: %s\n", ptr);
