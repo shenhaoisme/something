@@ -54,18 +54,29 @@ const char * inet_ntop(int family, const void *addrptr, char *strptr, size_t len
 #define   HOSTLEN  256
 int main(int argc, char *argv[])
 {
-	char *ptr, **pptr;
+	char *ptr = NULL, **pptr;
 	struct hostent *hptr;
 	char str[32] = {0};
-	
-	//ptr = argv[1];
-	gethostname(ptr, HOSTLEN);   
-	if((hptr = gethostbyname(ptr)) == NULL)
-	{
-		printf("gethostbyname error: %s\n", ptr);
-		return 0;
+	char hostname[40];	
+	/*if(argc >1)
+		ptr = argv[1];
+	else*/
+		gethostname(hostname, sizeof(hostname));   
+	if(ptr != NULL)
+	{	if((hptr = gethostbyname(ptr)) == NULL)
+		{
+                	//printf("gethostbyname error: %s\n", ptr);
+                	return 0;
+        	}
 	}
-	
+	else
+	{
+		if((hptr = gethostbyname(hostname)) == NULL)
+		{
+			//printf("gethostbyname error: %s\n", ptr);
+			return 0;
+		}
+	}
 	printf("official hostname:%s\n", hptr->h_name);   //主机规范名
 	
 	for(pptr = hptr->h_aliases; *pptr != NULL; pptr++)   //将主机别名打印出来
