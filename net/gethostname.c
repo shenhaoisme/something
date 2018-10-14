@@ -1,4 +1,5 @@
 /*	operation result
+ * way of run: ./gethostbyname www.baidu.com
  * official hostname:www.a.shifen.com
  * alias: www.baidu.com
  * address: 115.239.210.27
