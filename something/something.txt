@@ -1,2 +1,0 @@
-yum groupinstall error
-https://access.redhat.com/solutions/1310043
