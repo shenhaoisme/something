@@ -2,3 +2,5 @@ yum groupinstall error
 https://access.redhat.com/solutions/1310043
 
 https://blog.csdn.net/frank_jb/article/details/77199834 //socket
+更新软件源
+http://mirrors.163.com/.help/debian-security.htm
