@@ -17,3 +17,12 @@ typedef struct
 目的：获取想要的成员指针
 解析：倒着数20个byte，正好到fmtChunkSize这个位置
 
+
+enum media_beep_type
+{
+    BEEP_TYPE_TONE=1,   // 1
+    BEEP_TYPE_RING,   // 2
+
+    BEEP_TYPE_SIZE    // 3
+};
+目的：BEEP_TYPE_SIZE可以当做判断的选项
