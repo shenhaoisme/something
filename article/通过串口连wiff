@@ -1,1 +1,10 @@
-https://blog.csdn.net/ipqwcwt/article/details/83543082
+wpa_cli;
+set_network ALE-TPC;
+set_network 1 key_mgmt WPA-PSK;
+set_network 1 psk "hxfx@2015"
+
+wpa_supplicant -B -i wlan0 -c <(wpa_passphrase "ALE-TPC" "hxfx@2015")
+wpa_passphrase "ALE-TPC" "hxfx@2015" > ./wpa.conf
+wpa_supplicant -i wlan0 -B -c  ./wpa.conf
+应该是配置文件路径vi /etc/wpa_supplicant/wpa_supplicant.conf
+但就是IP ping不到
