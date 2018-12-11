@@ -1,0 +1,18 @@
+
+
+all:
+
+        pwd
+
+       $(shell rm ./main)        #
+main:
+#       @rm main #这个不可以，应该是main流程就进不来
+        gcc main.c -lwiringPi -o main
+
+clean:
+        rm main
+        
+ @ 只是让这条命令本身不与显示
+ pwd 本身就可以直接使用
+ $(shell pwd) 是会报错的，但 $(shell ls)是可以的
+ 在main中
