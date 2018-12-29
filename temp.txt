@@ -1,0 +1,44 @@
+现在这个问题由几方面：
+1
+
+alarm（10）
+
+他是个函数，过10s就会给当前的进程发一个alarm的信号
+
+问1 这个alarm应该只发一次就ok了吧？？
+问2 北街说的不安全是什么意思？
+他所描述的线程中：
+ 	
+	sleep(1)
+	callback()
+
+如果这个alarm信号收到，所有的线程会被中断？可能会导致callback调用不成功？
+
+2
+
+sigaction
+函数的三个参数的意义
+
+为甚要把第三个参数带上？？？
+
+sa_mask
+应该是所有的信号都接受，没有被屏蔽的
+
+flock
+有个函数，还有个结构体，看网上说，函数被fcntl 取代了
+	
+Describes the type of lock. If the value of the Command parameter to the fcntl subroutine is F_SETLK orF_SETLKW, the l_type field indicates the type of lock to be created.
+
+描述了一下lock的类型，如果作为fcntl的参数，参数2 F_SETLK orF_SETLKW，l_type意思是该锁可能
+会被创建，可能的值，
+ 
+_lock.l_type = F_WRLCK;
+
+写功能已经被上锁了
+
+
+
+
+
+
+
